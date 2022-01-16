@@ -1,25 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
+import { Header } from './components/header';
+import { useEffect, useState } from 'react';
+import { Route, Routes,  BrowserRouter as Router, useParams } from "react-router-dom";
+import News from './components/news';
+import { Container } from '@mui/material';
+import { Footer } from './components/footer';
 
 function App() {
+  const [isLoading, setLoadingState] = useState(true);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+       <Container fixed>
+    <Router>
+      <Header/>
+      <Routes>
+          <Route path="/" element={<News/>}/>
+          <Route path="news/:type" element={<News/>}/>
+          <Route path="*" element={<NotFound/>}/>
+      </Routes>
+      <Footer/>
+    </Router>
+    </Container>
     </div>
-  );
-}
+  )}
 
 export default App;
+
+const NotFound =()=>{
+  return <Container>
+           <h1> 404 Not Found</h1>
+         </Container>
+}
